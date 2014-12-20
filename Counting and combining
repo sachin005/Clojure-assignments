@@ -1,0 +1,12 @@
+(defn func1 [v] (vec (partition-by #(= (first v) %) v)))
+
+  (defn func2 [v]
+    (loop [res1 (func1 v) result []]
+      (if (empty? (second res1))
+        (conj result (first res1))
+        (recur (func1 (last res1)) (conj result (first res1)))
+      )
+    )
+  )
+
+(defn func3 [v] map #(conj (vector (first %)) (count (func2 [v]))) (distinct [v]))
